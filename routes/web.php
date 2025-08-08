@@ -17,4 +17,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth'])->prefix('admin')->group(function() {
+    Route::get('/', function(){ return redirect()->route('admin.posts.index'); });
+    Route::resource('posts', \App\Http\Controllers\Admin\PostController::class);
+});
+
 require __DIR__.'/auth.php';
