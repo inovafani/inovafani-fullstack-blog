@@ -1,43 +1,40 @@
-# === Laravel ===
-/vendor/
-/node_modules/
-/public/storage
-/storage/*.key
+# Laravel & PHP
+/vendor
+/node_modules
 .env
-.env.backup
-.phpunit.result.cache
+.env.*
+.phpunit.resul
+t.cache
 Homestead.yaml
 Homestead.json
+storage/*.key
+storage/pail
+/public/storage
+/public/hot
+/public/build
+/storage/*.key
+Thumbs.db
+.DS_Store
+*.log
+
+# IDE & Editor
 /.idea
 /.vscode
-.php_cs.cache
-/public/hot
-/public/storage
-/storage/*.key
+/.fleet
+/.nova
+/.zed
+phpactor.json
+auth.json
 
-# === Laravel logs & caches ===
-/storage/logs/*
-/bootstrap/cache/*
-/storage/framework/cache/*
-/storage/framework/sessions/*
-/storage/framework/views/*
-
-# === Next.js ===
-.next/
-/out/
-/dist/
-/build/
-/npm-debug.log*
+# Node / Next.js
+.next
+out
+npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
-.next/cache
+.pnp
+.pnp.js
 
-# === Misc ===
-.DS_Store
-Thumbs.db
-*.log
-*.tmp
+# Misc
 *.bak
-*.swp
-*.swo
+*.tmp
