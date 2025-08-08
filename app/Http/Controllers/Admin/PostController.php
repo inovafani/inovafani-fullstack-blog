@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -13,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::latest()->paginate(10);
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -21,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -29,7 +31,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'excerpt' => 'nullable|string',
+            'content' => 'required|string',
+            'published_at' => 'nullable|date',
+        ]);
+
+        $data['user_id'] = auth()->id;
+        $data['slug'] = Str::slug($data['title']).'-'.uniqid();
+
+        Post::create($data);
+        return redirect()->route('posts.index')->with('success', 'Post dibuat');
     }
 
     /**
@@ -37,7 +50,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -45,7 +58,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -53,7 +66,18 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'excerpt' => 'nullable|string',
+            'content' => 'required|string',
+            'published_at' => 'nullable|date',
+        ]);
+
+        $data['slug'] = Str::slug($data['title']).'-'.uniqid();
+
+        $post->update($data);
+
+        return redirect()->route('posts.index')->with('success', 'Post diperbarui');
     }
 
     /**
@@ -61,6 +85,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('posts.index')->with('success', 'Post dihapus');
     }
 }
