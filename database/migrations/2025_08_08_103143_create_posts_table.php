@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->ForeignId('user_id')->constrained()->onDelete('cascade'); // author/admin
+            $table->ForeignId('user_id')->nullable()->constrained()->onDelete('cascade'); // author/admin
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
